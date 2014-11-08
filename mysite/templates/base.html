@@ -1,15 +1,89 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>{% block title %}{% endblock %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Raspi </title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+#Layer1 {
+	position:absolute;
+	left:210px;
+	top:17px;
+	width:233px;
+	height:800px;
+	z-index:1;
+	overflow: auto;
+	background-color: #000066;
+}
+#Layer2 {
+	position:absolute;
+	left:461px;
+	top:18px;
+	width:1048px;
+	height:150px;
+	z-index:2;
+	background-color: #000066;
+}
+#Layer3 {
+	position:absolute;
+	left:460px;
+	top:191px;
+	width:1051px;
+	height:624px;
+	z-index:3;
+	background-color: #000066;
+}
+body {
+	background-color: #666666;
+}
+.STYLE1 {color: #FF0000}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	text-decoration: none;
+}
+.STYLE3 {
+	font-size: 36px;
+	font-weight: bold;
+	color: #FF0000;
+}
+.STYLE4 {
+	font-size: 24px;
+	color: #FF0000;
+}
+.STYLE5 {color: #990000}
+-->
+</style>
 </head>
+
 <body>
-    <h1>第一个PYTHON 做的网站</h1>
-    {% block content %}{% endblock %}
-    {% block footer %}
-    <hr>
-    <p>Thanks for visiting my site.</p>
-    {% endblock %}
+<div id="Layer1">
+  <p class="STYLE3">RASPBERRY</p>
+  <p class="STYLE4">树莓派系统信息：</p>
+  <div align="center"><br />
+  </div>
+  <p class="STYLE5">{% block sysinfo %}{% endblock %} </p>
+</div>
+<div id="Layer2">
+  <p align="center" class="STYLE1" >各种控制</p>
+  
+    <table width="401" height="38" border="0" align="center">
+      <tr>
+        <td nowrap="nowrap"><p align="center" class="STYLE1">灯</p></td>
+         <td nowrap="nowrap"><p align="center" class="STYLE1">电视</p></td>
+         <td nowrap="nowrap"><p align="center" class="STYLE1">电视</p></td>
+        <td nowrap="nowrap"><p align="center" class="STYLE1">电视</p></td>
+      </tr>
+    </table>
+</div>
+<div id="Layer3"><span class="STYLE1">{% block main %}{% endblock %}</span></div>
 </body>
 </html>
-
