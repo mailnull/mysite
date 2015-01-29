@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>我的智能家居——空调</title>
+<style type="text/css">
+<!--
+* { margin: 0; padding: 0; }
+body { background: #9da1a3; font-family: "微软雅黑"; padding:13px; font-size: 14px; }
+ul, li { display: block; list-style-image: none; list-style-type: none; }
+a { text-decoration: none; }
+#wrap { margin:auto; width: 500px; background: #FFF; box-shadow:0 0 13px #333; }
+#status { height: 150px; line-height: 150px; font-size: 18px; text-align: center; color: #616669; }
+#status b { color: #F60; }
+.main { height: 380px; }
+#subnav { line-height: 50px; padding: 0 28px 3px; border-top: 1px solid #e5e6e7; }
+#subnav a { color: #a2acb2; }
+#subnav span { float: right; }
+#topNav { background: #00aad5; text-align: center; border-radius: 0 0 3px 3px; width: 280px; margin: 0 auto; height: 37px; clear: both;padding:0 10px; }
+#topNav li { line-height: 36px; font-weight: bold; font-size: 12px; float: left; width: 70px;text-shadow: 0 1px 1px #0094b9;}
+#topNav a { color: #c5f6ff; }
+#topNav .hover a, #topNav a:hover { color: #fff; }
+#topNav .hover { background: #00a2cb; }
+#kt { background: #00d1f7;  }
+#ktMain { padding: 69px 72px 0; text-align: center; }
+#ktMain dl { clear: both; border: 1px solid #00bddf; line-height: 43px; height: 43px; background: #fbffff; font-size: 14px; font-weight: bold; }
+#ktMain dd, #ktMain dt { display: inline-block; float: left; width: 70px; }
+#ktMain dd { border-left: 1px solid #d7ebed; color: #728da2; cursor:pointer}
+#ktMain dt { font-weight: normal; color: #349ac4; background: #cbf9ff; border-right: 1px solid #a2e0e7; }
+#ktMain #wendu { margin-bottom: 23px; }
+#ktMain #wendu dd { font-size: 18px; }
+#ktMain #c { width: 141px; background: #fff6c7; color: #ff6612; }
+#ktMain .hover { background: #fff6c7; color: #ff6612; }
+#ktMain #ktKG { font-size: 18px; font-weight: bold; color: #0082A2; margin-bottom: 58px; height: 30px; cursor:pointer }
+-->
+</style>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	
+   if($("#sttm").text()){
+	  temp=+$("#sttm").text();
+	  $("#c").text($("#sttm").text()+"℃");
+	  $("#fuhao").text("℃");
+	   }else{
+	   temp=25;
+	   $("#fuhao").text("");
+	   };
+   //alert(temp);
+	//temp=25;  //临时用
+	//温度减操作
+	$("#wendusub").click(function() {
+      temp=temp-1;
+	  if(temp<17){
+		  temp=17;
+		  $("#c").text(temp+"℃");
+	  }
+	  else{$("#c").text(temp+"℃")};  
+    });
+	
+	//温度加操作
+	$("#wenduadd").click(function(){
+      temp=temp+1;
+	  if(temp>30){
+		  temp=30;
+		  $("#c").text(temp+"℃");
+	  }
+	  else{$("#c").text(temp+"℃")};  
+    });
+	//模式及开机动作 1 制冷  2 制暖
+	// 1
+	$("#cold").click(function() {
+        $("dt,dd").removeClass("hover");
+		$(this).addClass("hover");
+		$("#stmd").text("制冷/");
+		//$("#sttm").text(temp);
+		//$("#fuhao").text("℃");
+		$.post("/kongtiao/",{AC_on_cold:temp},function(ret){
+			$("#sttm").text(ret);
+			$("#fuhao").text("℃");
+			});
+		
+    });
+	// 2
+	$("#heat").click(function() {
+        $("dt,dd").removeClass("hover");
+		$(this).addClass("hover");
+		$("#stmd").text("制暖/");
+		//$("#sttm").text(temp);
+		//$("#fuhao").text("℃");
+		$.post("/kongtiao/",{AC_on_heat:temp},function(ret){
+			$("#sttm").text(ret);
+			$("#fuhao").text("℃");
+			});
+		
+    });	
+		
+  $("#ktKG").click(function(){
+	  $("dt,dd").removeClass("hover");
+	  $("#Mode").addClass("hover");
+	  $("#sttm,#fuhao").text("");
+	  $.post("/kongtiao/",{AC_Off:"off"},function(ret){
+		  $("#stmd").text(ret);
+		  $("#sttm,#fuhao").text("");
+		  $("#c").text(25+"℃");
+		  });
+	  });
+	
+});
+</script>
+
+
+</head>
+<body>
+<div id="wrap">
+  <div id="kt" class="main">
+    <ul id="topNav">
+      <li><a href="#">客厅空调</a></li>
+      <li><a href="#">主卧空调</a></li>
+      <li class="hover"><a href="#">次卧空调</a></li>
+      <li><a href="#">客房空调</a></li>
+    </ul>
+    <div id="ktMain">
+      <div id="ktKG">关闭次卧空调</div>
+      
+      <dl id="wendu">
+        <dt>温度</dt>
+        <dd style="border-left:0" id="wendusub">-</dd>
+        <dd id="c">{{ de_wendu }}℃</dd>
+        <dd id="wenduadd">+</dd>
+      </dl>
+      <dl>
+        <dt class="hover" id="Mode">模式</dt>
+        <dd style="border-left:0" id="cold">制冷</dd>
+        <dd  id="heat">制暖</dd>
+        <dd>除湿</dd>
+        <dd>自动</dd>
+      </dl>
+    </div>
+  </div>
+  <div id="status">次卧空调状态：
+  		<b id="stmd">{{ fan_mode }}</b><b id="sttm">{{ wendu }}</b><b id="fuhao"></b></div>
+  <div id="subnav"><span><a href="../">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a></div>
+</div>
+</body>
+</html>
