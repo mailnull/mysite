@@ -3,49 +3,60 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from django import template
+#from django import template
 from rawsfan import rawscontrol
 from rawsfan.code import cold_code , heat_code
 from rawsfan.models import RawStatus as rawstatus
 
+list_1 = [u'关机',u'制暖/']
+list_2 = [u'关机',u'制冷/']
 def kongtiao(request):
     p = rawstatus.objects.all()
     for i in p :
         wendu = i.rawtemp
         fanmode = i.rawmode
         wendu1 = i.rawtemp1
-        dic = {'fan_mode':fanmode,'wendu':wendu,'de_wendu':wendu1}
+    dic = {'fan_mode':fanmode,'wendu':wendu,'de_wendu':wendu1}
     if request.method == "POST":
         CON = rawscontrol.rawscontrol()
+        #制冷
         if 'AC_on_cold' in request.POST:
-            
+            p = rawstatus.objects.get(id=1)
             CMD=request.POST['AC_on_cold']
-            decode=cold_code[int(CMD)-17]
-            CON.command(decode)
-            ret=CMD
-            p = rawstatus.objects.get(id=1)
-            p.rawtemp =ret
-            p.rawmode="制冷/"
-            p.save()
-            return HttpResponse(ret)
+            #任何模式下温度改变或模式为（“关机”或”制暖“）
+            if (p.rawmode in list_1) or int(CMD) != int(p.rawtemp):
+
+                decode=cold_code[int(CMD)-17]
+                CON.command(decode)
+                p.rawtemp =CMD
+                p.rawmode="制冷/"
+                p.save()
+                return HttpResponse(p.rawtemp)
+            return HttpResponse(p.rawtemp)
+        #制暖
         elif "AC_on_heat" in request.POST:
+            p = rawstatus.objects.get(id=1)
             CMD=request.POST['AC_on_heat']
-            decode=heat_code[int(CMD)-17]
-            CON.command(decode)
-            ret=CMD
-            p = rawstatus.objects.get(id=1)
-            p.rawtemp=ret
-            p.rawmode="制暖/"
-            p.save()
-            return HttpResponse(ret)
+
+            if (p.rawmode in list_2) or int(CMD) != int(p.rawtemp):
+                decode=heat_code[int(CMD)-17]
+                CON.command(decode)
+                p.rawtemp = CMD 
+                p.rawmode="制暖/"
+                p.save()
+                return HttpResponse(p.rawtemp)
+            return HttpResponse(p.rawtemp)
+        #关机
         elif request.POST.get('AC_Off',''):
-            CON.command("7B84E01F")
             p = rawstatus.objects.get(id=1)
-            p.rawmode="关机"
-            p.rawtemp=""
-            p.save()
+            if p.rawmode != u'关机':
+                CON.command("7B84E01F")
+                p.rawmode="关机"
+                p.rawtemp=""
+                p.save()
+                return HttpResponse(p.rawmode)
             return HttpResponse(p.rawmode)
 
 
