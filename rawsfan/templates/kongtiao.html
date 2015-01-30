@@ -38,7 +38,7 @@ a { text-decoration: none; }
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	ddd="AC_on_heat";
+	
    if($("#sttm").text()){
 	  temp=+$("#sttm").text();
 	  $("#c").text(temp+"℃");
@@ -76,7 +76,7 @@ $(document).ready(function() {
 		$("#stmd").text("制冷/");
 		//$("#sttm").text(temp);
 		//$("#fuhao").text("℃");
-		$.post("/kongtiao/",{ddd:temp},function(ret){
+		$.post("/kongtiao/",{AC_on_cold:temp},function(ret){
 			$("#sttm").text(ret);
 			$("#fuhao").text("℃");
 			});
@@ -89,7 +89,7 @@ $(document).ready(function() {
 		$("#stmd").text("制暖/");
 		//$("#sttm").text(temp);
 		//$("#fuhao").text("℃");
-		$.post("/kongtiao/",{ddd:temp},function(ret){
+		$.post("/kongtiao/",{AC_on_heat:temp},function(ret){
 			$("#sttm").text(ret);
 			$("#fuhao").text("℃");
 			});
@@ -100,7 +100,7 @@ $(document).ready(function() {
 	  $("dt,dd").removeClass("hover");
 	  $("#Mode").addClass("hover");
 	  $("#sttm,#fuhao").text("");
-	  $.post("/kongtiao/",{AC_Off:"off"},function(ret){
+	  $.post("/kongtiao/",{AC_Off:"off",room:"master"},function(ret){
 		  $("#stmd").text(ret);
 		  $("#sttm,#fuhao").text("");
 		  temp=25;
