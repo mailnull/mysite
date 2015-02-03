@@ -37,18 +37,60 @@ a { text-decoration: none; }
 -->
 </style>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/rawsfan_shezhi.js"></script>
 <script type="text/javascript">
+var room="{{ rm_en }}";
 $(document).ready(function() {
 	
-	
-   if($("#sttm").text()){
-	  temp=+$("#sttm").text();
-	  $("#c").text(temp+"℃");
-	  $("#fuhao").text("℃");
-	   }else{
-	   temp=25;
-	   $("#fuhao").text("");
-	   };
+	//function shezhi(room){
+//	$("#topNav li").removeClass("hover");
+//	$("dt,dd").removeClass("hover");//清除样式
+//	$("li#"+room).addClass("hover"); //添加样式
+//	$("#ktKG b").text($("small#"+room).text());//设置关闭"房间"空调字样
+//	$("b#KT_room").text($("b."+room).text());//设置空调状态"房间"字样
+//	$("#stmd").text($("small#"+room).text());//设置空调状态"状态"字样
+//	 if($("small."+room).text()){   //检查空调状态”温度“  不为空
+//	  temp=+$("small."+room).text();
+//	  $("b#sttm").text(temp);
+//	  $("#c").text(temp+"℃");
+//	  $("#fuhao").text("℃");
+//	  		//if((($("small#"+room).text())=="制暖/"){
+//			if(($("b."+room).text())=="制暖/"){
+//				$("#heat").addClass("hover");
+//	  		}else{
+//				$("#cold").addClass("hover");
+//			};
+//		  
+//	   }else{   //为空  空调关机  设置缺省温度   清"℃"符号
+//	   temp=25; 
+//	   $("#c").text(temp+"℃");
+//	   $("dt#Mode").addClass("hover");
+//	   $("b#sttm").text("");
+//	   $("#fuhao").text("");
+//	   }};
+	   
+	   shezhi(room);  //根据网址黙认显示的房间
+	//客厅
+	$("li#KTkt").click(function() {  
+        room="KTkt";
+		shezhi(room);
+    });
+	//主卧
+	$("li#ZWkt").click(function() {
+        room="ZWkt"
+		shezhi(room);
+    });
+	//次卧
+	$("li#CWkt").click(function() {
+        room="CWkt";
+		shezhi(room);
+    });
+	//客房
+	$("li#KFkt").click(function() {
+        room="KFkt";
+		shezhi(room);
+    });
+  
    //alert(temp);
 	//temp=25;  //临时用
 	//温度减操作
@@ -78,7 +120,7 @@ $(document).ready(function() {
 		$("#stmd").text("制冷/");
 		//$("#sttm").text(temp);
 		//$("#fuhao").text("℃");
-		$.post("/kongtiao/",{AC_on_cold:temp},function(ret){
+		$.post("/kongtiao/"+room+"/",{AC_on_cold:temp,room:room},function(ret){
 			$("#sttm").text(ret);
 			$("#fuhao").text("℃");
 			});
@@ -91,7 +133,7 @@ $(document).ready(function() {
 		$("#stmd").text("制暖/");
 		//$("#sttm").text(temp);
 		//$("#fuhao").text("℃");
-		$.post("/kongtiao/",{AC_on_heat:temp},function(ret){
+		$.post("/kongtiao/"+room+"/",{AC_on_heat:temp,room:room},function(ret){
 			$("#sttm").text(ret);
 			$("#fuhao").text("℃");
 			});
@@ -102,8 +144,8 @@ $(document).ready(function() {
 	  $("dt,dd").removeClass("hover");
 	  $("#Mode").addClass("hover");
 	  $("#sttm,#fuhao").text("");
-	  $.post("/kongtiao/",{AC_Off:"off",room:"master"},function(ret){
-		  $("#stmd").text(ret);
+	  $.post("/kongtiao/"+room+"/",{AC_Off:"off",room:room},function(ret){
+		  $("#stmd").text("关机");
 		  $("#sttm,#fuhao").text("");
 		  temp=25;
 		  $("#c").text(25+"℃");
@@ -119,13 +161,13 @@ $(document).ready(function() {
 <div id="wrap">
   <div id="kt" class="main">
     <ul id="topNav">
-      <li><a href="#">客厅空调</a></li>
-      <li><a href="#">主卧空调</a></li>
-      <li class="hover"><a href="#">次卧空调</a></li>
-      <li><a href="#">客房空调</a></li>
+      <li id="KTkt"><a href="#">客厅空调</a></li>
+      <li id="ZWkt"><a href="#">主卧空调</a></li>
+      <li id="CWkt"><a href="#">次卧空调</a></li>
+      <li id="KFkt"><a href="#">客房空调</a></li>
     </ul>
     <div id="ktMain">
-      <div id="ktKG">关闭次卧空调</div>
+      <div id="ktKG">关闭<b>{{ room }}</div>
       
       <dl id="wendu">
         <dt>温度</dt>
@@ -142,10 +184,15 @@ $(document).ready(function() {
       </dl>
     </div>
   </div>
-  <div id="status">次卧空调状态：
-  		<b id="stmd">{{ fan_mode }}</b><b id="sttm">{{ wendu }}</b><b id="fuhao"></b></div>
-  <div id="subnav"><span><a href="/">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a><a style="margin-left: 30px;" href="#">{{ user.username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
+  <div id="status"><b id="KT_room"></b>状态:<b id="stmd"></b>
+  		<b id="sttm"></b><b id="fuhao"></b></div>
+  <div id="subnav"><span><a href="/">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a><a style="margin-left: 30px;" href="#">{{ username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
 </div>
-<div id="login"></div>
+<div style="display:none">
+{% for kt in kt_status %}
+<p><b id="{{ kt.rm_en }}">{{ kt.rm_en }}</b><b class="{{ kt.rm_en }}">{{ kt.rawmode }}</b>
+<small id="{{ kt.rm_en }}">{{ kt.room }}</small><small class="{{ kt.rm_en }}">{{ kt.rawtemp }}</small></p>
+{% endfor %}
+</div>
 </body>
 </html>

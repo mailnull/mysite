@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url="/login/")
 def index(request):
     p = LightStatus.objects.all()
-    dic_index = {'Light_status':p,'room':"KTzm",'room_e':"KTzm"}
+    dic_index = {'Light_status':p,'room':"KTzm",'room_e':"KTzm",'username':request.user.username}
     return render_to_response('deng_light.html',dic_index)
 
 @login_required(login_url="/login/")
@@ -38,7 +38,7 @@ def deng(request,room_CMD):
                     i.lg_flag="开"
                     i.save()
                     return HttpResponse(ret)
-        dic = {'Light_status':p,'room':lg_room}
+        dic = {'Light_status':p,'room':lg_room,'username':request.user.username}
         return render_to_response('deng_light.html',dic)
     return HttpResponse("aaaaaaaaaaaaaaaaa")
 

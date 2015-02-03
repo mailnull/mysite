@@ -99,7 +99,7 @@ $("li#KFzm").click(function() {
 </div>
   </div>
   <div  id="status">电灯当前状态：<b></b>　</div>
-  <div id="subnav"><span><a href="/">返回首页</a></span><a href="#zhaoming">照明</a>　<a href=/kongtiao/>空调</a><a style="margin-left: 30px;" href="#">{{ request.user.username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
+  <div id="subnav"><span><a href="/">返回首页</a></span><a href="#zhaoming">照明</a>　<a href=/kongtiao/>空调</a><a style="margin-left: 30px;" href="#">{{ username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
 </div>
 <div style="display: none;">
 {% for lg in Light_status %}

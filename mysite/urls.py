@@ -15,9 +15,9 @@ urlpatterns = patterns('',
     url(r'^logout/$',views.logout_view),
     url(r'^admin/', include(admin.site.urls)),
     (r'^$',views.index),
-    (r'^diand/$',views.diandeng),
-    (r'^rawsfan/$',views.rawsfancon),
-    (r'^lights/$',views.light),
+    #(r'^diand/$',views.diandeng),
+    #(r'^rawsfan/$',views.rawsfancon),
+    #(r'^lights/$',views.light),
 
                       )
 urlpatterns+=staticfiles_urlpatterns()

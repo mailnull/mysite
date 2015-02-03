@@ -1,60 +1,30 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
 <head>
-<meta charset="utf-8">
-<title>我的智能家居——登陆</title>
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登陆</title>
 <style type="text/css">
-<!--
-* { margin: 0; padding: 0; }
-body { background: #9da1a3; font-family: "微软雅黑"; padding:13px; font-size: 14px; }
-ul, li { display: block; list-style-image: none; list-style-type: none; }
-a { text-decoration: none; }
-#wrap { margin:auto; width: 500px; background: #FFF; box-shadow:0 0 13px #333; }
-#status { height: 150px; line-height: 150px; font-size: 18px; text-align: center; color: #616669; }
-#status b { color: #F60; }
-#subnav { line-height: 50px; padding: 0 28px 3px; border-top: 1px solid #e5e6e7; }
-#subnav a { color: #a2acb2; }
-#subnav span { float: right; }
-#sideNav { float: left; width: 70px; background: #384952; margin: 70px 0 0 0; height: 240px; text-align: center; border-radius: 0 4px 4px 0; }
-#sideNav li { border-bottom: 1px solid #3f5058; line-height: 38px; font-weight: bold; font-size: 12px; }
-#sideNav a { color: #78848a; }
-#sideNav .hover a, #sideNav a:hover { color: #FA0; }
-.main { height: 380px; }
-#dengMain { float: right; width: 210px; margin: 80px 123px 0 0; height: 210px; line-height: 210px; text-align: center; font-size: 50px; border-radius:210px; cursor:pointer }
-#dengKai { background: #23d8ff; }
-#dengKai #dengMain { background: #fff; color: #747985; box-shadow:0 0 180px #fff; border: 5px solid #f9feff; }
-#dengGuan { background: #0084c8 }
-#dengGuan #dengMain { background: #728da2; color: #d9f4ff; box-shadow:0 0 150px #5a6065; border: 5px solid #728da2; }
-#login{text-align: center;  line-height: 50px;}
-#login a{color: #FFF; font-size: 14px; font-weight: bold; padding: 0 19px; text-shadow: 1px 1px 1px #333;}
--->
-</style></head>
-
+*{margin: 0px;padding: 0px;outline: none;}
+body{ 
+	background-color: #9da1a3;
+	
+}
+form{border: 1px solid #270644;width: 250px;-moz-border-radius: 20px;-webkit-border-radius: 20px;background: -moz-linear-gradient(19% 75% 90deg,#9da1a3, #963AD6);background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9da1a3), to(#9da1a3));margin: 50px auto;padding: 20px;-moz-box-shadow: 0px -5px 300px #270644;-webkit-box-shadow: 0px -5px 300px #9da1a3;}
+label{font-size: 12px;font-family: arial, sans-serif;list-style-type: none;color: #fff;text-shadow: #000 1px 1px;margin-bottom: 10px;font-weight: bold;letter-spacing: 1px;text-transform: uppercase;display: block;}
+input{-webkit-transition-property: -webkit-box-shadow, background;-webkit-transition-duration: 0.25s;padding: 6px;border-bottom: 0px;border-left: 0px;border-right: 0px;border-top: 1px solid #9da1a3;-moz-box-shadow: 0px 0px 2px #000;-webkit-box-shadow: 0px 0px 2px #000;margin-bottom: 10px;background:#9da1a3;width: 230px;}
+input.submit{-webkit-transition-property: -webkit-box-shadow, background;-webkit-transition-duration: 0.25s;width: 100px;background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9da1a3), to(#9da1a3));background: -moz-linear-gradient(19% 75% 90deg,#781bb9, #9da1a3);color: #fff;text-transform: uppercase;text-shadow: #000 1px 1px;border-top: 1px solid #ad64e0;margin-top: 10px;}
+input.submit: hover{-webkit-box-shadow: 0px 0px 2px #000;background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));background: -moz-linear-gradient(19% 75% 90deg,#781bb9, #963AD6);}
+input.submit: active{background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#781bb9), to(#963AD6));background: -moz-linear-gradient(19% 75% 90deg,#963AD6, #781bb9);}
+input: hover{-webkit-box-shadow: 0px 0px 4px #000;background: #9d39e1;}	
+</style>
+</head>
 <body>
-<div id="wrap">
-    <div class="main">
-    <ul id="sideNav">
-     <form action="" method="post">
-      {% csrf_token %}
-         <label for="username">Username:</label>
-         <input type="text" name="username" value="" id="username">
-        <label for="password"><br>
-           Password:  </label>
-         <input type="password" name="password" value="" id="password">
-      
-     
-       <input type="submit" value="login" /></li>
-         <input type="hidden" name="next" value="{{ next|escape }}" />
-      
-     </form>
+<form action="" method="post">
+<label>Username:</label>
+<input type="text" name="username" value="" id="username">
+<label>Password:</label>
+<input type="password" name="password" value="" id="password">
+<input  type="submit" value="login"   class="submit" />
 
-    </ul>
-  </div>
- 
-  <div id="subnav"><span><a href="/">返回首页</a></span></div>
-</div>
-
-
+<input type="hidden" name="next" value="{{ next|escape }}" /></form>	
 </body>
 </html>
