@@ -9,15 +9,17 @@ from django.http import HttpResponse
 from rawsfan import rawscontrol
 from rawsfan.code import cold_code , heat_code
 from rawsfan.models import RawStatus as rawstatus
+from django.contrib.auth.decorators import login_required
 
 list_1 = [u'关机',u'制暖/']
 list_2 = [u'关机',u'制冷/']
-def kongtiao(request):
-    p = rawstatus.objects.all()
-    for i in p :
-        wendu = i.rawtemp
-        fanmode = i.rawmode
-        wendu1 = i.rawtemp1
+@login_required(login_url='/login/')
+def index(request):
+    p = rawstatus.objects.get(id=1)
+    #for i in p :
+    wendu = p.rawtemp
+    fanmode =p.rawmode
+    wendu1 = p.rawtemp1
     dic = {'fan_mode':fanmode,'wendu':wendu,'de_wendu':wendu1}
     if request.method == "POST":
         CON = rawscontrol.rawscontrol()
@@ -61,5 +63,6 @@ def kongtiao(request):
 
 
     return render_to_response('kongtiao.html',dic)
-
-# Create your views here.
+@login_required(login_url='/login/')
+def kongtiao(request,room_CMD):
+    return HttpResponse(room_CMD)

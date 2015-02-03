@@ -1,0 +1,95 @@
+<style type="text/css">
+<!--
+.STYLE1 {font-size: 16px}
+.STYLE2 {color: #FF0000}
+-->
+</style>
+{% extends "base.html" %}
+{% block sysinfo %}
+   <span class="STYLE1">访问时间：</span> </p>
+<p class="STYLE2">{{ sys_date }}  </p>
+<p>&nbsp;</p>
+<p class="STYLE1">CPU温度：</p>
+<p>&nbsp;&nbsp;<span class="STYLE2">{{ cpu_temp }}</span></p>
+<p>&nbsp;</p>
+<p class="STYLE1">你的IP：</p>
+<p>&nbsp;&nbsp; <span class="STYLE2">{{ ipadd }} </span></p>
+<p class="STYLE1">&nbsp;</p>
+<p class="STYLE1">你的系统信息：</p>
+<p>&nbsp;<span class="STYLE2">&nbsp;{{ useragent }}</span> </p>
+  {% endblock %}
+{% block main %}
+  <table  height="279" border="1">
+    <tbody>
+      <tr>
+        <th height="57" colspan="3" class="STYLE3" scope="col">空 调 控 制</th>
+      </tr>
+      <tr>
+        <td width="230" height="39" class="STYLE4">自动<em>(温度选择）</em></td>
+        <td width="230" class="STYLE4">制热</td>
+        <td width="230" class="STYLE4">关机</td>
+      </tr>
+      <tr>
+        <td align="left" valign="top">
+        <form method="post" action="">
+        {% load staticfiles %}
+    {% csrf_token %}
+         
+          <select name="AC_on_col"  id="select">
+          <option value="">>温度选择</option>
+          
+          <option value ="1FE008F7">自动17度</option> 
+          <option value ="1FE018E7">自动18度</option> 
+          <option value ="1FE038C7">自动19度</option> 
+          <option value ="1FE028D7">自动20度</option> 
+          <option value ="1FE06897">自动21度</option> 
+          <option value ="1FE07887">自动22度</option> 
+          <option value ="1FE058A7">自动23度</option> 
+          <option value ="1FE048B7">自动24度</option> 
+          <option value ="1FE0C837">自动25度</option> 
+          <option value ="1FE0D827">自动26度</option> 
+          <option value ="1FE09867">自动27度</option> 
+          <option value ="1FE08877">自动28度</option> 
+          <option value ="1FE0A857">自动29度</option> 
+          <option value ="1FE0B847">自动30度</option> 
+          </select>
+          <p class="STYLE5">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;<input type="submit" value="开机" /></button></p>
+        </form></td>
+        <td align="left" valign="top">
+        <form  method="post" action="">
+            {% load staticfiles %}
+    {% csrf_token %}
+          
+          <select name="AC_on_heat" id="select2">
+          <option value="">>温度选择</option>
+          <option value ="BF400CF3">制热17度</option> 
+          <option value ="BF401CE3">制热18度</option> 
+          <option value ="BF403CC3">制热19度</option> 
+          <option value ="BF402CD3">制热20度</option> 
+          <option value ="BF406C93">制热21度</option> 
+          <option value ="BF407C83">制热22度</option> 
+          <option value ="BF405CA3">制热23度</option> 
+          <option value ="BF404CB3">制热24度</option> 
+          <option value ="BF40CC33">制热25度</option> 
+          <option value ="BF40DC23">制热26度</option> 
+          <option value ="BF409C63">制热27度</option> 
+          <option value ="BF408C73">制热28度</option> 
+          <option value ="BF40AC53">制热29度</option> 
+          <option value ="BF40BC43">制热30度</option>
+          </select>
+         <p class="STYLE5">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;<input type="submit" value="开机" /></button></p>
+        </form></td>
+        <td align="center" valign="middle">
+        <form  method="post" action="">
+            {% load staticfiles %}
+    {% csrf_token %}
+          <input name="7B84E01F" type="submit" id="7B84E01F" value="关机" /></button>
+        </form></td>
+      </tr>
+      <tr>
+        <td colspan="3" class="STYLE4">空调状态：{{ rawsfan }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
+

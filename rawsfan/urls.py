@@ -6,6 +6,8 @@ from rawsfan import views
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'mysite.views.home', name='home'),
-    url(r'^$',views.kongtiao),
+    #url(r'^(.+)/$',views.kongtiao),
+    url(r'^$',views.index),
+    url(r'^(.+)/$',views.kongtiao)
                       )
 urlpatterns+=staticfiles_urlpatterns()

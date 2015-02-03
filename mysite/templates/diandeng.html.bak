@@ -1,0 +1,34 @@
+<style type="text/css">
+<!--
+.STYLE1 {font-size: 16px}
+.STYLE2 {color: #FF0000}
+-->
+</style>
+<p>{% extends "base.html" %}
+  
+  {% block sysinfo %} 
+  <span class="STYLE1">时间：</span> </p>
+<p class="STYLE2">{{ sys_date }}  </p>
+<p>&nbsp;</p>
+<p class="STYLE1">CPU温度：</p>
+<p>&nbsp;&nbsp;<span class="STYLE2">{{ cpu_temp }}</span></p>
+<p>&nbsp;</p>
+<p class="STYLE1">你的IP：</p>
+<p>&nbsp;&nbsp; <span class="STYLE2">{{ ipadd }} </span></p>
+<p class="STYLE1">&nbsp;</p>
+<p class="STYLE1">你的系统信息：</p>
+<p>&nbsp;<span class="STYLE2">&nbsp;{{ useragent }}</span> </p>
+<p> {% endblock %} </p>
+  
+{% block main %}
+<form action=" " method="post">{% csrf_token %}
+<p>
+  <input type="submit" name="kai" title="开" accesskey="k" value="开灯" />
+   </button></p>
+<p>
+ <input type="submit" name="guan" title="关" accesskey="g" value="关灯" />
+  </button></p>
+</form>
+<p font-color:FF0000>  {{ msg }}</p>
+  {% endblock %}</p>
+  <p>&nbsp;  </p>

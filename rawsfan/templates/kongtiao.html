@@ -32,6 +32,8 @@ a { text-decoration: none; }
 #ktMain #c { width: 141px; background: #fff6c7; color: #ff6612; }
 #ktMain .hover { background: #fff6c7; color: #ff6612; }
 #ktMain #ktKG { font-size: 18px; font-weight: bold; color: #0082A2; margin-bottom: 58px; height: 30px; cursor:pointer }
+#login{text-align: center;  line-height: 50px;}
+#login a{color: #FFF; font-size: 14px; font-weight: bold; padding: 0 19px; text-shadow: 1px 1px 1px #333;}
 -->
 </style>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
@@ -142,7 +144,8 @@ $(document).ready(function() {
   </div>
   <div id="status">次卧空调状态：
   		<b id="stmd">{{ fan_mode }}</b><b id="sttm">{{ wendu }}</b><b id="fuhao"></b></div>
-  <div id="subnav"><span><a href="../">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a></div>
+  <div id="subnav"><span><a href="/">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a><a style="margin-left: 30px;" href="#">{{ user.username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
 </div>
+<div id="login"></div>
 </body>
 </html>

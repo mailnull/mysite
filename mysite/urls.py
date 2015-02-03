@@ -1,18 +1,23 @@
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+#from django.contrib.auth.views import login,logout
 #from mysite.views import hello,current_datetime,cpu_temp
 from mysite import views
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'mysite.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    
+    url(r'^kongtiao/',include('rawsfan.urls')),
+    url(r'^light/',include('light.urls')),
+    url(r'^login/$',views.login_view),
+    url(r'^logout/$',views.logout_view),
     url(r'^admin/', include(admin.site.urls)),
-    # (r'^$',views.hello ),
-    #(r'^hello/$',views.hello),
-    #('^time/$',views.current_datetime),
-    #(r'^temp/$',views.cpu_temp ),
-    (r'^show/(\d{1,2})/$',views.show),
-    (r'^mailnull/(.+)/(.+)/$',views.mailnull),
     (r'^$',views.index),
-)
+    (r'^diand/$',views.diandeng),
+    (r'^rawsfan/$',views.rawsfancon),
+    (r'^lights/$',views.light),
+
+                      )
+urlpatterns+=staticfiles_urlpatterns()

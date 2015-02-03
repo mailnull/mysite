@@ -7,7 +7,7 @@
 <p>{% extends "base.html" %}
   
   {% block sysinfo %} 
-  <span class="STYLE1">时间：</span> </p>
+  <span class="STYLE1">访问时间：</span> </p>
 <p class="STYLE2">{{ sys_date }}  </p>
 <p>&nbsp;</p>
 <p class="STYLE1">CPU温度：</p>
@@ -21,5 +21,13 @@
 <p> {% endblock %} </p>
   
   <p>{% block main %}
-  系统信息{% endblock %}</p>
+ <!--
+  <img src="{{ STATIC_URL}}onkai.jpg" alt="img">
+  <form method=POST action="">
+  {% load staticfiles %}
+  <input type="image" name="kaii" src=" {% static user_imgsrc %}" >
+  </button>
+  系统信息
+  -->
+  {% endblock %}</p>
   <p>&nbsp;  </p>

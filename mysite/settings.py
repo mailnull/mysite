@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+SITE_ROOT=os.path.join(os.path.abspath(os.path.dirname(__file__)),'..')
+STATIC_ROOT=os.path.join(SITE_ROOT,'Static')
 
+#LOGIN_REDIN_REDITECT_URL = "/"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -20,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'z!actq6##858wyrx24oo75m*49hbnoie-3j-k2-8ny3*hf0ol%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -36,13 +39,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
+    'rawsfan',
+    'light',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+   # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -82,6 +86,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS=(
+
+    ("css",os.path.join(STATIC_ROOT,'css')),
+    ("js",os.path.join(STATIC_ROOT,'js')),
+    ("images",os.path.join(STATIC_ROOT,'Images')),
+)
 # Comma correctly in place.
 TEMPLATE_DIRS = (
             '/var/www/mysite/mysite/templates',

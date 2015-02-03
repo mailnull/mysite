@@ -1,5 +1,5 @@
 <uwsgi>
-  <socket>0.0.0.0:8077</socket>
+  <socket>127.0.0.1:8077</socket>
   <master>true</master>
   <processes>2</processes>
   <module>mysite.wsgi</module>
