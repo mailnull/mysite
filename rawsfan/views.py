@@ -10,14 +10,14 @@ from rawsfan import rawscontrol
 from rawsfan.code import cold_code , heat_code
 from rawsfan.models import RawStatus as rawstatus
 from django.contrib.auth.decorators import login_required
-
+import datetime
+import json
 list_1 = [u'关机',u'制暖/']
 list_2 = [u'关机',u'制冷/']
 @login_required(login_url='/login/')
 def index(request):
     p_kt = rawstatus.objects.all()
-    p = rawstatus.objects.get(id=1)
-    #for i in p :
+    p = rawstatus.objects.get(id=1)    
     wendu = p.rawtemp
     fanmode =p.rawmode
     wendu1 = p.rawtemp1
@@ -26,47 +26,6 @@ def index(request):
     dic_index = {'fan_mode':fanmode,'wendu':wendu,'de_wendu':wendu1,'room':room,'rm_en':rm_en,'kt_status':p_kt,'username':request.user.username}
     return render_to_response('kongtiao.html',dic_index)
 
-#def dddddddddd(request):   
-   # if request.method == "POST":
-        #CON = rawscontrol.rawscontrol()
-        #制冷
-            #p = rawstatus.objects.get(id=1)
-           #CMD=request.POST['AC_on_cold']
-            #任何模式下温度改变或模式为（“关机”或”制暖“）
-       # if (p.rawmode in list_1) or int(CMD) != int(p.rawtemp):
-
-               #### CON.command(decode)
-                #p.rawtemp =CMD
-                #p.rawmode="制冷/"
-                #p.save()
-                #return HttpResponse(p.rawtemp)
-           # return HttpResponse(p.rawtemp)
-        #制暖
-       # elif "AC_on_heat" in request.POST:
-           # p = rawstatus.objects.get(id=1)
-            #CMD=request.POST['AC_on_heat']
-#
-            #if (p.rawmode in list_2) or int(CMD) != int(p.rawtemp):
-               # decode=heat_code[int(CMD)-17]
-               # CON.command(decode)
-               # p.rawtemp = CMD 
-               # p.rawmode="制暖/"
-                #p.save()
-                #return HttpResponse(p.rawtemp)
-           # return HttpResponse(p.rawtemp)
-        #关机
-        #elif request.POST.get('AC_Off',''):
-           # p = rawstatus.objects.get(id=1)
-           # if p.rawmode != u'关机':
-           #     CON.command("7B84E01F")
-           #     p.rawmode="关机"
-           #     p.rawtemp=""
-           #     p.save()
-           #     return HttpResponse(p.rawmode)
-          #  return HttpResponse(p.rawmode)
-
-
-   # return render_to_response('kongtiao.html',"dic")
 @login_required(login_url='/login/')
 def kongtiao(request,room_CMD):
     p = rawstatus.objects.all()
@@ -81,6 +40,10 @@ def kongtiao(request,room_CMD):
             CON=rawscontrol.rawscontrol()
             req_room = request.POST.get('room','')
             if req_room == kt_rm_en:
+                if kt_mode == u'关机':
+                    i.timestamp=datetime.datetime.now()
+                else:
+                    pass
                 if "AC_on_cold" in request.POST:
                     CMD=request.POST['AC_on_cold']
                     if (kt_mode in list_1) or int(CMD) != int(kt_temp):
@@ -89,7 +52,10 @@ def kongtiao(request,room_CMD):
                         i.rawtemp= CMD
                         i.rawmode="制冷/"
                         i.save()
-                        return HttpResponse(i.rawtemp)
+                       # times=i.timestamp.replace(tzinfo=None)#+datetime.timedelta(hours=8)
+                        times=i.timestamp.strftime("%m月%d日%H:%M")
+                        jsons=json.dumps({"kt_temp":i.rawtemp,"up_time":times},ensure_ascii=False)
+                        return HttpResponse(jsons,content_type="application/json")
                     return HttpResponse(i.rawtemp)
                 elif "AC_on_heat" in request.POST:
                     CMD=request.POST['AC_on_heat']
@@ -99,11 +65,15 @@ def kongtiao(request,room_CMD):
                         i.rawtemp=CMD
                         i.rawmode="制暖/"
                         i.save()
-                        return HttpResponse(i.rawtemp)
+                        #times=i.timestamp.replace(tzinfo=None)#+datetime.timedelta(hours=8)
+                        times=i.timestamp.strftime("%m月%d日%H:%M")
+                        jsons=json.dumps({"kt_temp":i.rawtemp,"up_time":times},ensure_ascii=False)
+                        return HttpResponse(jsons,content_type="application/json")
                     return HttpResponse(i.rawtemp)
                 elif request.POST.get('AC_Off'):
                     if kt_mode != u'关机':
                         CON.command("7B84E01F")
+
                         i.rawtemp=""
                         i.rawmode="关机"
                         i.save()

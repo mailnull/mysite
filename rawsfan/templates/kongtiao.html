@@ -118,11 +118,15 @@ $(document).ready(function() {
         $("dt,dd").removeClass("hover");
 		$(this).addClass("hover");
 		$("#stmd").text("制冷/");
-		//$("#sttm").text(temp);
-		//$("#fuhao").text("℃");
-		$.post("/kongtiao/"+room+"/",{AC_on_cold:temp,room:room},function(ret){
-			$("#sttm").text(ret);
-			$("#fuhao").text("℃");
+		$("#sttm").text(temp);
+		$("#fuhao").text("℃");
+		$("b."+room).text("制冷/");
+		$.post("/kongtiao/"+room+"/",{AC_on_cold:temp,room:room},function(jsons){
+			//$("#sttm").text(jsons.kt_temp);
+			//$("#fuhao").text("℃");
+			$("span#time").text(jsons.up_time);
+			$("em."+room).text(jsons.up_time);
+			$("small."+room).text(jsons.kt_temp)
 			});
 		
     });
@@ -131,11 +135,15 @@ $(document).ready(function() {
         $("dt,dd").removeClass("hover");
 		$(this).addClass("hover");
 		$("#stmd").text("制暖/");
-		//$("#sttm").text(temp);
-		//$("#fuhao").text("℃");
-		$.post("/kongtiao/"+room+"/",{AC_on_heat:temp,room:room},function(ret){
-			$("#sttm").text(ret);
-			$("#fuhao").text("℃");
+		$("#sttm").text(temp);
+		$("#fuhao").text("℃");
+		$("b."+room).text("制暖/");
+		$.post("/kongtiao/"+room+"/",{AC_on_heat:temp,room:room},function(jsons){
+			//$("#sttm").text(jsons.kt_temp);
+			//$("#fuhao").text("℃");
+			$("span#time").text(jsons.up_time);
+			$("em."+room).text(jsons.up_time);
+			$("small."+room).text(jsons.kt_temp)
 			});
 		
     });	
@@ -144,11 +152,15 @@ $(document).ready(function() {
 	  $("dt,dd").removeClass("hover");
 	  $("#Mode").addClass("hover");
 	  $("#sttm,#fuhao").text("");
+	  $("small."+room).text("");
+	  $("#stmd").text("关机");
+	  $("span#time").text("");
+	  $("#sttm,#fuhao").text("");
+	  temp=25;
+	  $("#c").text(25+"℃");
 	  $.post("/kongtiao/"+room+"/",{AC_Off:"off",room:room},function(ret){
-		  $("#stmd").text("关机");
-		  $("#sttm,#fuhao").text("");
-		  temp=25;
-		  $("#c").text(25+"℃");
+		  //$("#stmd").text("关机");
+		  $("b."+room).text("关机");
 		  });
 	  });
 	
@@ -167,7 +179,7 @@ $(document).ready(function() {
       <li id="KFkt"><a href="#">客房空调</a></li>
     </ul>
     <div id="ktMain">
-      <div id="ktKG">关闭<b>{{ room }}</div>
+      <div id="ktKG">关闭<b>{{ room }}</b></div>
       
       <dl id="wendu">
         <dt>温度</dt>
@@ -184,14 +196,14 @@ $(document).ready(function() {
       </dl>
     </div>
   </div>
-  <div id="status"><b id="KT_room"></b>状态:<b id="stmd"></b>
-  		<b id="sttm"></b><b id="fuhao"></b></div>
+  <div id="status"><b id="KT_room"></b><b id="stmd"></b>
+  		<b id="sttm"></b><b id="fuhao"></b><span id="time" style="padding-left: 8px;"></span></div>
   <div id="subnav"><span><a href="/">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a><a style="margin-left: 30px;" href="#">{{ username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
 </div>
-<div style="display:none">
+<div style="">
 {% for kt in kt_status %}
-<p><b id="{{ kt.rm_en }}">{{ kt.rm_en }}</b><b class="{{ kt.rm_en }}">{{ kt.rawmode }}</b>
-<small id="{{ kt.rm_en }}">{{ kt.room }}</small><small class="{{ kt.rm_en }}">{{ kt.rawtemp }}</small></p>
+<p><small id="{{ kt.rm_en }}">{{ kt.room }}</small><b id="{{ kt.rm_en }}">{{ kt.rm_en }}</b><b class="{{ kt.rm_en }}">{{ kt.rawmode }}</b>
+<small class="{{ kt.rm_en }}">{{ kt.rawtemp }}</small>at<em class="{{ kt.rm_en }}">{% if kt.rawtemp %}{{ kt.timestamp|date:"m月d日H:i" }}{% endif %}</em></p>
 {% endfor %}
 </div>
 </body>

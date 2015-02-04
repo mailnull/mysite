@@ -10,6 +10,6 @@ class RawStatus(models.Model):
     rm_en = models.CharField(max_length=4,unique=True)
 
 class RawStatusAdmin(admin.ModelAdmin):
-    list_display = ('room','rm_en','rawmode','rawtemp')
+    list_display = ('room','rm_en','timestamp','rawmode','rawtemp')
     
 admin.site.register(RawStatus,RawStatusAdmin)
