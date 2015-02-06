@@ -2,7 +2,8 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from light.models import LightStatus
-from light import lg_control
+#from light import lg_control
+from light import light_con
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="/login/")
@@ -20,19 +21,21 @@ def deng(request,room_CMD):
         lg_status=i.lg_status
     if room_CMD == lg_room:
         if request.method == "POST":
-            lg_control.init()
+            #lg_control.init()
             req_room=request.POST.get("dcontrol","")
+            CON =light_con.Control_light(req_room)
             if req_room == lg_room:
                 if lg_status == u'dengKai':
-                    lg_control.off()
-                    lg_control.clean()
+                    CON.command(CMD=0)
+                    #lg_control.clean()
                     ret = "0"
                     i.lg_status="dengGuan"
                     i.lg_flag="关"
                     i.save()
                     return HttpResponse(ret)
                 elif lg_status == u'dengGuan':
-                    lg_control.on()
+                    #lg_control.on()
+                    CON.command(CMD=1)
                     ret = "1"
                     i.lg_status = "dengKai"
                     i.lg_flag="开"
