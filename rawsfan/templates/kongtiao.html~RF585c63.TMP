@@ -96,7 +96,7 @@ $(document).ready(function() {
 	//temp=25;  //临时用
 	//温度减操作
 	$("#wendusub").click(function() {
-      temp-=1;
+      temp=temp-1;
 	  if(temp<17){
 		  temp=17;
 		  //$("#c").text(temp+"℃");
@@ -108,7 +108,7 @@ $(document).ready(function() {
 	
 	//温度加操作
 	$("#wenduadd").click(function(){
-      temp+=1;
+      temp=temp+1;
 	  if(temp>30){
 		  temp=30;
 		  //$("#c").text(temp+"℃");

@@ -22,6 +22,7 @@ function shezhi(room){
 	   temp=25; 
 	   $("#c").text(temp+"℃");
 	   $("dt#Mode").addClass("hover");
+ #      $("#ktKG").css("display","none");
 	   $("b#sttm").text("");
 	   $("#fuhao").text("");
 	   $("span#time").text("");
@@ -32,3 +33,17 @@ function shezhi(room){
 //<small class="{{ kt.rm_en }}">{{ kt.rawtemp }}</small>at<em class="{{ kt.rm_en }}">{% if kt.rawtemp %}{{ kt.timestamp|date:"m月d日H:i" }}{% endif %}</em></p>
 //{% endfor %}
 //</div>
+function addorsub_on(){
+	mode=""
+	if(($("b."+room).text())=="制暖/")mode="AC_on_heat";
+	if(($("b."+room).text())=="制冷/")mode="AC_on_cold";
+	if($("small."+room).text()){
+		
+		$.post("/kongtiao/"+room+"/",{mode:temp,room:room},function(jsons){
+			//$("#sttm").text(jsons.kt_temp);
+			//$("#fuhao").text("℃");
+			//$("span#time").text(jsons.up_time);
+			//$("em."+room).text(jsons.up_time);
+			$("small."+room).text(jsons.kt_temp)
+			});
+	}};

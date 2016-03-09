@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=0.68, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 <title>我的智能家居-照明</title>
 
 <style type="text/css">
@@ -35,22 +36,22 @@ var room="{{ room }}" ;
 $(document).ready(function(){
 	shezhi(room);
 //选择客厅：	
-	$("li#KTzm").click(function() {
+	$("li#KTzm").mouseenter(function() {
 	   room="KTzm";
 	   shezhi(room);
     });
 //选择主卧：
-	$("li#ZWzm").click(function() {
+	$("li#ZWzm").mouseenter(function() {
    	   room="ZWzm";
 	   shezhi(room);
     });	
 //选择次卧：
-$("li#CWzm").click(function() {
+$("li#CWzm").mouseenter(function() {
 	   room="CWzm";
 	   shezhi(room);
     });	
 //选择客房：
-$("li#KFzm").click(function() {
+$("li#KFzm").mouseenter(function() {
 	   room="KFzm";
 	   shezhi(room);
     });

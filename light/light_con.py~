@@ -3,7 +3,7 @@
 import RPi.GPIO as gpio
 class Control_light():
     def __init__(self,room):
-        pins = {"KTzm":38,"ZWzm":37,"CWzm":36,"KFzm":32}
+        pins = {"KTzm":38,"ZWzm":16,"CWzm":36,"KFzm":32}
         self.room=room
         if self.room in pins:
             self.pin = pins[room]

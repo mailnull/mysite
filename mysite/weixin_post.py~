@@ -85,27 +85,9 @@ def weixin_post(request):
         response=json.dumps(dic,ensure_ascii=False)
         return HttpResponse(response)
         return HttpResponse(response,content_type="applecation/json")
-    return HttpResponse("Only for POST!")
+    return HttpResponse("Only for POST！")
 
 
 
 
-def gettime(request):
-    status=request.GET.get("status",'')
-    now=datetime.datetime.now()
-    now=now.strftime("%H%M")
-    
-    return HttpResponse(now) 
 
-def check_light_status(request):
-    if request.method == "POST":
-        lightOfroom=request.POST.get("room",None)
-        try:
-            p=lgs.objects.get(lg_room=lightOfroom)
-            status=p.lg_status
-            response={"status":status,"room":lightOfroom}
-        except:
-               response={"status":"error room name!"}
-        response=json.dumps(response,ensure_ascii=False)
-        return HttpResponse(response,content_type="applecation/json")
-    return HttpResponse("Only for POST!")

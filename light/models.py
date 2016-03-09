@@ -9,7 +9,14 @@ class LightStatus(models.Model):
     lg_room = models.CharField(max_length=4,unique=True)
     lg_flag=models.CharField(max_length=1)
 
+class espSertime(models.Model):
+	Sertime = models.CharField(max_length=4)
+	
+		
 class LightStatusAdmin(admin.ModelAdmin):
     list_display = ('lg_rm_zh','lg_room','lg_flag','lg_status')
 
+class espSertimeAdmin(admin.ModelAdmin):
+	list_display = ("Sertime",)
 admin.site.register(LightStatus,LightStatusAdmin)
+admin.site.register(espSertime)

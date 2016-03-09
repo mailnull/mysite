@@ -16,7 +16,7 @@ def time(reauest):
     t1=p.timestamp.replace(tzinfo=None)+datetime.timedelta(hours=8)
    # t1=t1.strftime("%m月%d日%H:%M")
     t2 =datetime.datetime.now()
-    t3=t2-t1
+    t3=(t2-t1)
     dic={'t1':t1,'t2':t3}
     return render_to_response('time.html',dic)
 	

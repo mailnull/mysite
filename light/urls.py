@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     #url(r'^(.+)/$',views.kongtiao),
     url(r'^$',views.index),
     url(r'^(.+)/$',views.deng),
+    #url(r'^weixin_post/$',views.weixin_post),
                       )
 urlpatterns+=staticfiles_urlpatterns()

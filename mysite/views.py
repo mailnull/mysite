@@ -31,21 +31,19 @@ def sysinfo_proc(request):
     }
 
 def index(request):
+    dic =""
     p_kt = rawstatus.objects.all()
     p_lg = LightStatus.objects.all()
     #dic= {"Light_status":p_lg,"kt_status":p_kt}
     if request.user.is_authenticated():
         dic= {"Light_status":p_lg,"kt_status":p_kt,'username':request.user.username}
-        return render_to_response('index-.html',dic)
+        #return render_to_response('index-.html',dic)
     else:
         dic= {"Light_status":p_lg,"kt_status":p_kt}
-        return render_to_response('index-.html',dic)
-	#for s_status in p:
-	#	rawmode = s_status.rawmode
-	#	rawtemp = s_status.rawtemp
-	#	rawroom = s_status.room
-	#dic_fan = {'rawmode':rawmode,'rawtemp':rawtemp,'rawroom':rawroom}
+        #return render_to_response('index-.html',dic)
+	
     return render_to_response('index-.html',dic)
+    
 	
 	
 
@@ -145,9 +143,25 @@ def login_view(request):
             else:
                 return HttpResponseRedirect('/')
     	else:
-            return render_to_response('login.html',{'bbb':'bbb'})
-    return render_to_response('login.html',{'bbb':""})
+            resp_dic={'username':username,'password':"",'errmsg':u"用户名或者密码错误！"}
+            return render_to_response('login.html',resp_dic)
+    resp_dic={'username':u"输入用户名",'password':u"请输入密码"}
+    return render_to_response('login.html',resp_dic)
 
 def logout_view(request):
     auth.logout(request)
     return HttpResponseRedirect("/")
+
+def readtemp(request):
+	try:
+		from mysite import serial_control as s
+	except:
+		return HttpResponse("import serial error")
+
+	client = s
+	client.send("123456")
+	temp=s.readser()
+	if (temp):
+		return HttpResponse(s) 
+	else:
+		return HttpResponse("read error")
