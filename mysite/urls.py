@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     
     url(r'^kongtiao/',include('rawsfan.urls')),
-    url(r'^light/',include('light.urls')),
+    url(r'^light/',include('light.urls',namespace='light')),
     url(r'^login/$',views.login_view,name='login'),
     url(r'^logout/$',views.logout_view,name='logout'),
     url(r'^admin/', include(admin.site.urls)),

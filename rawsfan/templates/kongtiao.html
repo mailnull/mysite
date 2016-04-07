@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=0.68, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-<title>我的智能家居——空调</title>
+<title>我的家居——空调</title>
 <style type="text/css">
 <!--
 * { margin: 0; padding: 0; }
@@ -203,7 +203,7 @@ $(document).ready(function() {
   </div>
   <div id="status"><b id="KT_room"></b><b id="stmd"></b>
   		<b id="sttm"></b><b id="fuhao"></b><span id="time" style="padding-left: 8px;"></span></div>
-  <div id="subnav"><span><a href="/">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a><a style="margin-left: 30px;" href="#">{{ username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
+  <div id="subnav"><span><a href="/">返回首页</a></span><a href="/light/">照明</a>　<a href="/kongtiao/">空调</a><a style="margin-left: 30px;" href="#">{{ username|default:"欢迎" }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
 </div>
 <div style="display:none">
 {% for kt in kt_status %}

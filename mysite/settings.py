@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-   # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -92,5 +92,6 @@ STATICFILES_DIRS=(
 )
 # Comma correctly in place.
 TEMPLATE_DIRS = (
-            '/var/www/mysite/mysite/templates',
+        os.path.join(os.path.abspath(os.path.dirname(__file__)),"templates"),
+       # '/var/www/mysite/mysite/templates',
 )

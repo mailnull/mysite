@@ -10,11 +10,14 @@ from rawsfan import rawscontrol
 from rawsfan.code import cold_code , heat_code
 from rawsfan.models import RawStatus as rawstatus
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 import json
 list_1 = [u'关机',u'制暖/']
 list_2 = [u'关机',u'制冷/']
+
 @login_required(login_url='/login/')
+@csrf_exempt
 def index(request):
     p_kt = rawstatus.objects.all()
     p = rawstatus.objects.get(id=1)    
@@ -27,6 +30,7 @@ def index(request):
     return render_to_response('kongtiao.html',dic_index)
 
 @login_required(login_url='/login/')
+@csrf_exempt
 def kongtiao(request,room_CMD):
     p = rawstatus.objects.all()
     pk_room = rawstatus.objects.filter(rm_en=room_CMD)

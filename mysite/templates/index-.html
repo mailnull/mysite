@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=0.68, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 
-<title>我的智能家居</title>
+<title>我的家居</title>
 <style type="text/css">
 <!--
 * { margin: 0; padding: 0; }
@@ -65,6 +65,6 @@ li a:hover span b  {font-size:20px;color:#F51;}
   </div>
 </div>
 </div><div id="login">
-{% if username %}{{ username }} <a href="{% url 'logout' %}">退出</a>{% else %}<a  href="{% url 'login' %}">登陆</a>{% endif %}</div>
+{% if user.is_authenticated %}{{ user.username }} <a href="{% url 'logout' %}">退出</a>{% else %}<a  href="{% url 'login' %}">登陆</a>{% endif %}</div>
 </body>
 </html>

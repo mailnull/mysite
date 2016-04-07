@@ -1,5 +1,6 @@
 # _*_ coding:UTF-8 _*_
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponse
 from light.models import LightStatus
 #from light import lg_control
@@ -8,15 +9,26 @@ from django.contrib.auth.decorators import login_required
 import json
 
 on,off=1,0
+
+def light_proc(request):
+	p=LightStatus.objects.all()
+	dic_index = {'Light_status':p}
+	return dic_index
+
 @login_required(login_url="/login/")
 def index(request):
-    p = LightStatus.objects.all()
-    dic_index = {'Light_status':p,'room':'KTzm','username':request.user.username}
-    return render_to_response('deng_light.html',dic_index)
+    #p = LightStatus.objects.all()
+    #dic_index = {'Light_status':p,'room':'KTzm','username':request.user.username}
+    #return render_to_response('deng_light.html',dic_index)
+    return render_to_response('deng_light.html',{'room':'KTzm'},context_instance=RequestContext(request,processors=[light_proc]))
 
 @login_required(login_url="/login/")
 def deng(request,room_CMD):
     p = LightStatus.objects.all()
+    roomname = ("KTzm","ZWzm","CWzm","KFzm")
+    if room_CMD not in roomname:
+        dic = {'room':'KTzm'}
+        return render_to_response('deng_light.html',dic,context_instance=RequestContext(request,processors=[light_proc]))
     p_room = LightStatus.objects.filter(lg_room=room_CMD)
     for i in p_room:
         lg_room = i.lg_room
@@ -43,8 +55,8 @@ def deng(request,room_CMD):
                     i.lg_flag="开"
                     i.save()
                 return HttpResponse(ret)
-        dic = {'Light_status':p,'room':lg_room,'username':request.user.username}
-        return render_to_response('deng_light.html',dic)
+        dic = {'Light_status':p,'room':lg_room}
+        return render_to_response('deng_light.html',dic,context_instance=RequestContext(request))
     return HttpResponse("aaaaaaaaaaaaaaaaa")
 
 def weixin_post(request):
@@ -59,7 +71,7 @@ def weixin_post(request):
 
 
     return HttpResponse("只能POST提交!")
-
+    
 
 
 

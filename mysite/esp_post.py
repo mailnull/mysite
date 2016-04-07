@@ -9,9 +9,10 @@ from light.models import LightStatus as lgs
 from light.models import espSertime as esptime
 from light import light_con
 import datetime
-
+from django.views.decorators.csrf import csrf_exempt
 
 #sertime=0
+@csrf_exempt
 def esp8266_post_light(request):
     if request.method == "POST":
         room = request.POST.get("room","")

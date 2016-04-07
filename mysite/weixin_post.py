@@ -10,7 +10,12 @@ from light import light_con
 from rawsfan import rawscontrol
 from rawsfan.code import cold_code , heat_code
 import datetime
+from django.shortcuts import render_to_response
+from django.contrib import auth
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def weixin_post(request):
     dic={}
     if request.method == "POST":
@@ -86,6 +91,7 @@ def weixin_post(request):
         return HttpResponse(response)
         return HttpResponse(response,content_type="applecation/json")
     return HttpResponse("Only for POST!")
+    
 
 
 
@@ -97,6 +103,7 @@ def gettime(request):
     
     return HttpResponse(now) 
 
+@csrf_exempt
 def check_light_status(request):
     if request.method == "POST":
         lightOfroom=request.POST.get("room",None)

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=0.68, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-<title>我的智能家居-照明</title>
+<title>我的家居-照明</title>
 
 <style type="text/css">
 <!--
@@ -33,7 +33,23 @@ a { text-decoration: none; }
 <script type="text/javascript" src="/static/js/light_shezhi.js"></script>
 <script type="text/javascript">
 var room="{{ room }}" ;
+
+{% for lg_index in Light_status %}
+  var {{ lg_index.lg_room }} = "{{ lg_index.lg_flag }}";
+{% endfor %}
+
+
+$.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+
 $(document).ready(function(){
+/*
+{% for lg_index in Light_status %}
+var {{ lg_index.lg_room }} = "{{ lg_index.lg_flag }}";
+{% endfor %}
+*/
+
 	shezhi(room);
 //选择客厅：	
 	$("li#KTzm").mouseenter(function() {
@@ -99,13 +115,13 @@ $("li#KFzm").mouseenter(function() {
     <div id="dengMain">开
 </div>
   </div>
-  <div  id="status">电灯当前状态：<b></b>　</div>
-  <div id="subnav"><span><a href="/">返回首页</a></span><a href="#zhaoming">照明</a>　<a href=/kongtiao/>空调</a><a style="margin-left: 30px;" href="#">{{ username }}:</a><a style="margin-left: 20px;" href="/logout/">退出</a></div>
+  <div  id="status"><span id="LT_room"></span>状态：<b></b>　</div>
+  <div id="subnav"><span><a href="/">返回首页</a></span><a href="#zhaoming">照明</a>　<a href=/kongtiao/>空调</a>
+  						 <a style="margin-left: 30px;" href="#">你好 {{ user.username }}:</a><a style="margin-left: 20px;" href="{% url 'logout' %}">退出</a>
 </div>
-<div style="display: none;">
+<div style="display:None">
 {% for lg in Light_status %}
-<p><b id = "{{ lg.lg_room }}">{{ lg.lg_room }}</b>:<b class="{{ lg.lg_room }}">{{ lg.lg_status }}</b><small class="{{ lg.lg_room }}">{{ lg.lg_flag }}</small></p>
+<p><b id = "{{ lg.lg_room }}">{{ lg.lg_room }}</b>:<b class="{{ lg.lg_room }}">{{ lg.lg_status }}</b><small class="{{ lg.lg_room }}">{{ lg.lg_flag }}</small><span id="{{ lg.lg_room }}">{{ lg.lg_rm_zh }}</span></p>
 {% endfor %}
 </div>
-</body>
 </html>

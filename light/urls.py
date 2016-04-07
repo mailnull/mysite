@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'mysite.views.home', name='home'),
     #url(r'^(.+)/$',views.kongtiao),
-    url(r'^$',views.index),
+    url(r'^$',views.index,name='index'),
     url(r'^(.+)/$',views.deng),
     #url(r'^weixin_post/$',views.weixin_post),
                       )

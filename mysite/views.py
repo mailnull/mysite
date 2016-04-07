@@ -12,6 +12,7 @@ from rawsfan.models import RawStatus as rawstatus
 from light.models import LightStatus
 from django.contrib import auth
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 #系统信息全局
 def sysinfo_proc(request):
     now = datetime.datetime.now()
@@ -37,12 +38,9 @@ def index(request):
     #dic= {"Light_status":p_lg,"kt_status":p_kt}
     if request.user.is_authenticated():
         dic= {"Light_status":p_lg,"kt_status":p_kt,'username':request.user.username}
-        #return render_to_response('index-.html',dic)
     else:
         dic= {"Light_status":p_lg,"kt_status":p_kt}
-        #return render_to_response('index-.html',dic)
-	
-    return render_to_response('index-.html',dic)
+    return render_to_response('index-.html',dic,context_instance=RequestContext(request))
     
 	
 	
@@ -129,7 +127,7 @@ def rawsfancon(request):
         
     return render_to_response('rawsfan.html',{ 'rawsfan': "" },
                 context_instance=RequestContext(request,processors=[sysinfo_proc]))
-
+@csrf_exempt
 def login_view(request):
     url_name= request.GET.get('next',"")
     if request.method == "POST":
